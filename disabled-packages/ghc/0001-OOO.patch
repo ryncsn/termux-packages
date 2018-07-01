@@ -1,0 +1,30 @@
+From 316680c611d28132d1bedd14e8b96841e12beebe Mon Sep 17 00:00:00 2001
+From: Kairui Song <kasong@redhat.com>
+Date: Mon, 2 Jul 2018 00:41:30 +0800
+Subject: [PATCH] OOO
+
+---
+ includes/Rts.h | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/includes/Rts.h b/includes/Rts.h
+index dd81033..927668c 100644
+--- a/includes/Rts.h
++++ b/includes/Rts.h
+@@ -294,13 +294,8 @@ TICK_VAR(2)
+ #define SUPPORTS_TYPEOF
+ #endif
+ 
+-#if defined(SUPPORTS_TYPEOF)
+-#define stg_min(a,b) ({typeof(a) _a = (a), _b = (b); _a <= _b ? _a : _b; })
+-#define stg_max(a,b) ({typeof(a) _a = (a), _b = (b); _a <= _b ? _b : _a; })
+-#else
+ #define stg_min(a,b) ((a) <= (b) ? (a) : (b))
+ #define stg_max(a,b) ((a) <= (b) ? (b) : (a))
+-#endif
+ 
+ /* -------------------------------------------------------------------------- */
+ 
+-- 
+2.16.4
+

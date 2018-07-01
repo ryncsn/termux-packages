@@ -1,0 +1,40 @@
+From 1f598c52b0453644bb528561fc7ef6aebf04498c Mon Sep 17 00:00:00 2001
+From: Kairui Song <kasong@redhat.com>
+Date: Mon, 2 Jul 2018 00:54:14 +0800
+Subject: [PATCH] SJDSKDJ
+
+---
+ .configure.swp                    | Bin 24576 -> 0 bytes
+ configure                         |   2 +-
+ configure.ac                      |   2 +-
+ utils/hsc2hs/.CrossCodegen.hs.swp | Bin 45056 -> 0 bytes
+ 4 files changed, 2 insertions(+), 2 deletions(-)
+ delete mode 100644 .configure.swp
+ delete mode 100644 utils/hsc2hs/.CrossCodegen.hs.swp
+
+diff --git a/configure b/configure
+index d9ecc19..2466138 100755
+--- a/configure
++++ b/configure
+@@ -8428,7 +8428,7 @@ fi
+ # tools we are looking for. In the past, GHC supported a number of
+ # versions of LLVM simultaneously, but that stopped working around
+ # 3.5/3.6 release of LLVM.
+-LlvmVersion=5.0
++LlvmVersion=6.0
+ 
+ sUPPORTED_LLVM_VERSION=$(echo \($LlvmVersion\) | sed 's/\./,/')
+ 
+diff --git a/configure.ac b/configure.ac
+index 255f0f3..47abb00 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -638,7 +638,7 @@ AC_SUBST([LibtoolCmd])
+ # tools we are looking for. In the past, GHC supported a number of
+ # versions of LLVM simultaneously, but that stopped working around
+ # 3.5/3.6 release of LLVM.
+-LlvmVersion=5.0
++LlvmVersion=6.0
+ AC_SUBST([LlvmVersion])
+ sUPPORTED_LLVM_VERSION=$(echo \($LlvmVersion\) | sed 's/\./,/')
+ AC_DEFINE_UNQUOTED([sUPPORTED_LLVM_VERSION], ${sUPPORTED_LLVM_VERSION}, [The supported LLVM version number])

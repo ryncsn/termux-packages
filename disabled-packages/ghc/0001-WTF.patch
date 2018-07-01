@@ -1,0 +1,48 @@
+From f36a0eae90d60cdf6e83510a7f7cb9252b3ee5aa Mon Sep 17 00:00:00 2001
+From: Kairui Song <kasong@redhat.com>
+Date: Mon, 2 Jul 2018 00:19:21 +0800
+Subject: [PATCH] WTF?
+
+---
+ libraries/base/GHC/IO/Handle/Lock.hsc |  24 ++++++++++++------------
+ utils/hsc2hs/.CrossCodegen.hs.swp     | Bin 45056 -> 45056 bytes
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/libraries/base/GHC/IO/Handle/Lock.hsc b/libraries/base/GHC/IO/Handle/Lock.hsc
+index b0a3449..35f773d 100644
+--- a/libraries/base/GHC/IO/Handle/Lock.hsc
++++ b/libraries/base/GHC/IO/Handle/Lock.hsc
+@@ -123,21 +123,21 @@ data FLock  = FLock { l_type   :: CShort
+                     }
+ 
+ instance Storable FLock where
+-    sizeOf _ = #{size flock}
+-    alignment _ = #{alignment flock}
++    sizeOf _ = #{size struct flock}
++    alignment _ = #{alignment struct flock}
+     poke ptr x = do
+         fillBytes ptr 0 (sizeOf x)
+-        #{poke flock, l_type}   ptr (l_type x)
+-        #{poke flock, l_whence} ptr (l_whence x)
+-        #{poke flock, l_start}  ptr (l_start x)
+-        #{poke flock, l_len}    ptr (l_len x)
+-        #{poke flock, l_pid}    ptr (l_pid x)
++        #{poke struct flock, l_type}   ptr (l_type x)
++        #{poke struct flock, l_whence} ptr (l_whence x)
++        #{poke struct flock, l_start}  ptr (l_start x)
++        #{poke struct flock, l_len}    ptr (l_len x)
++        #{poke struct flock, l_pid}    ptr (l_pid x)
+     peek ptr = do
+-        FLock <$> #{peek flock, l_type}   ptr
+-              <*> #{peek flock, l_whence} ptr
+-              <*> #{peek flock, l_start}  ptr
+-              <*> #{peek flock, l_len}    ptr
+-              <*> #{peek flock, l_pid}    ptr
++        FLock <$> #{peek struct flock, l_type}   ptr
++              <*> #{peek struct flock, l_whence} ptr
++              <*> #{peek struct flock, l_start}  ptr
++              <*> #{peek struct flock, l_len}    ptr
++              <*> #{peek struct flock, l_pid}    ptr
+ 
+ lockImpl :: Handle -> String -> LockMode -> Bool -> IO Bool
+ lockImpl h ctx mode block = do

@@ -1,0 +1,59 @@
+From 738f3666c878ee9e79c3d5e819ef8b3460288edf Mon Sep 17 00:00:00 2001
+From: Moritz Angermann <moritz.angermann@gmail.com>
+Date: Wed, 29 Nov 2017 19:21:45 -0500
+Subject: [PATCH] ghc.mk: Use the same conditional install logic from unlit
+
+Summary:
+This removes the make concurrency bug from the CrossCompilation
+fix, and uses the same appraoch `utils/unlit` already uses. See:
+https://git.haskell.org/ghc.git/commitdiff/ff84d052850b637b03bbb98cf05202e44886257d
+
+Reviewers: bgamari, O25 HSC2HS, hvr
+
+Differential Revision: https://phabricator.haskell.org/D4243
+---
+ ghc.mk | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
+
+diff --git a/ghc.mk b/ghc.mk
+index 47e9508..386d472 100644
+--- a/utils/hsc2hs/ghc.mk
++++ b/utils/hsc2hs/ghc.mk
+@@ -5,27 +5,22 @@ utils/hsc2hs_dist_PROGNAME         = hsc2hs
+ utils/hsc2hs_dist-install_PROGNAME = hsc2hs
+ 
+ utils/hsc2hs_dist_SHELL_WRAPPER = YES
+-utils/hsc2hs_dist_INSTALL = NO
+ utils/hsc2hs_dist_INSTALL_INPLACE = YES
+ 
+ utils/hsc2hs_dist-install_SHELL_WRAPPER = YES
+-utils/hsc2hs_dist-install_INSTALL = YES
+ utils/hsc2hs_dist-install_INSTALL_INPLACE = NO
+ 
+-$(eval $(call build-prog,utils/hsc2hs,dist,0))
+-
+-# When CrossCompiling, we want to ship the binary for the
+-# host, not for the target.  As such we need to compile
+-# with the Bootstrap compiler rather than with the in-tree
+-# stage1 compiler, which would result in a binary that
+-# won't run on the host.
+-ifeq "$(CrossCompiling)" "YES"
+-# compile with stage 0 (bootstrap compiler)
+-$(eval $(call build-prog,utils/hsc2hs,dist-install,0))
++ifeq "$(Stage1Only)" "YES"
++utils/hsc2hs_dist_INSTALL         = YES
++utils/hsc2hs_dist-install_INSTALL = NO
+ else
+-$(eval $(call build-prog,utils/hsc2hs,dist-install,1))
++utils/hsc2hs_dist_INSTALL         = NO
++utils/hsc2hs_dist-install_INSTALL = YES
+ endif
+ 
++$(eval $(call build-prog,utils/hsc2hs,dist,0))
++$(eval $(call build-prog,utils/hsc2hs,dist-install,1))
++
+ # After build-prog above
+ utils/hsc2hs_dist-install_MODULES = $(utils/hsc2hs_dist_MODULES)
+ 
+-- 
+1.9.1
